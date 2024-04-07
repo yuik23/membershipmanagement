@@ -1,0 +1,20 @@
+version: '3.8'
+services: #起動するコンテナごとに一つのサービスを定義
+  db: #dbという名前をつけてサービスを定義
+    build: . #構築時に適用するオプションを指定
+    container_name: member_db_container
+    platform: linux/x86_64
+    command: --default-authentication-plugin=mysql_native_password #デフォルトのコマンドに上書き パスワードハッシュ方式に基づくネイティブ認証を実行するプラグイン
+    restart: always #再起動ポリシーの設定(always:コンテナが停止すると常に再起動)
+    environment: #環境変数の設定
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: member_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports: #ポートを公開（ホスト:コンテナで記載.コンテナのみを指定した場合はホストはランダムに設定される
+      - 3307:3306
+    volumes: #パスをボリュームとしてマウント(ホスト側:コンテナ側のように記載)
+      - ./sql:/docker-entrypoint-initdb.d
+      - my-vol:/var/lib/mysql
+volumes: #ボリュームの設定my_volという名前のボリュームが定義される
+  my-vol:
