@@ -21,18 +21,19 @@ public class MemberService {
         return allMembers;
     }
 
+    public List<Member> findSameGradeMember(String type, Integer number) {
+        List<Member> sameGradeMembers = this.memberMapper.findByGrade(type, number);
+        return sameGradeMembers;
+    }
+
+    public List<Member> findMembersByName(String name) {
+        List<Member> members = this.memberMapper.findByName(name);
+        return members;
+    }
+
     public Member findMember(int id) {
         Optional<Member> member = this.memberMapper.findById(id);
         return member.orElseThrow(() -> new MemberNotFoundException("member not found"));
     }
 
-    public List<Member> findSameGradeMember(String type, int number) {
-        List<Member> sameGradeMembers = this.memberMapper.findByGrade(type, number);
-        return sameGradeMembers;
-    }
-
-    public List<Integer> findId(String name) {
-        List<Integer> ids = this.memberMapper.findByName(name);
-        return ids;
-    }
 }
