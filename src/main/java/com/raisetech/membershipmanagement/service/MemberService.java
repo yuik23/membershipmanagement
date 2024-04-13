@@ -21,7 +21,7 @@ public class MemberService {
         return allMembers;
     }
 
-    public List<Member> findSameGradeMember(String type, Integer number) {
+    public List<Member> findSameGradeMembers(String type, Integer number) {
         List<Member> sameGradeMembers = this.memberMapper.findByGrade(type, number);
         return sameGradeMembers;
     }

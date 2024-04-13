@@ -26,14 +26,14 @@ public class MemberController {
     その他の場合はBadRequestを返す処理
     */
     @GetMapping("/members")
-    public List<Member> getMembers(@RequestParam String name, String type, Integer number) {
+    public List<Member> getMembers(@RequestParam(required = false) String name, String type, Integer number) {
         if (name == null) {
             if ((type == null) && (number == null)) {
                 return memberService.findAll();
             } else if ((type == null) || (number == null)) {
                 throw new BadRequestException("Requested value is invalid");
             } else {
-                return memberService.findSameGradeMember(type, number);
+                return memberService.findSameGradeMembers(type, number);
             }
         } else if ((type == null) && (number == null)) {
             return memberService.findMembersByName(name);
